@@ -7,7 +7,9 @@ while(True):
         except:
             print("Błąd. Zmienna nie jest numerem.")
             quit()
-
+        if(number<1 or number>1024):
+            print("Błąd. Liczba spoza zakresu.")
+            quit()
         temp_number=number
         i=0
         new_number=0
