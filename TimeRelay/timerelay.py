@@ -1,8 +1,52 @@
-from machine import Pin
+#from machine import Pin
 import time
 import sys
 
-led=Pin(2,Pin.OUT)
+
+led=Pin(12,Pin.OUT)
+button=Pin(15,Pin.IN)
+led(0)
+
+def OpWyl():
+	print("Wcisnij przycisk, aby zacząć...")
+	while (not button()):
+		pass
+	led(1)
+	time.sleep(t1)
+	led(0)					
+	time.sleep(t2)
+	led(1)
+
+def OpZal():
+	print("Wcisnij przycisk, aby zacząć...")
+	while (not button()):
+		pass
+	led(0)
+	time.sleep(t1)
+	led(1)
+	time.sleep(t2)
+	led(0)
+
+def OpWyl_Cykl():
+	print("Wcisnij przycisk, aby zacząć...")
+	while(not button()):
+		pass
+	while(True):
+		led(1)
+		time.sleep(t1)
+		led(0)
+		time.sleep(t2)
+
+def OpZal_Cykl():
+	print("Wcisnij przycisk, aby zacząć...")
+	while(not button()):
+		pass
+	while(True):
+		led(0)
+		time.sleep(t1)
+		led(1)
+		time.sleep(t2)
+
 
 while(True):
 	print("Przekaznik czasowy PCU-520")
@@ -45,34 +89,33 @@ while(True):
 			print("Czas nie moze byc ujemny")
 			continue
 		if(selectionAuto==1):
-			led(0)
-			time.sleep(t1)
-			led(1)
-			time.sleep(t2)
-			led(0)
+			OpWyl()
 		if(selectionAuto==2):
-			led(1)
-			time.sleep(t1)
-			led(0)
-			time.sleep(t2)
-			led(1)
+			OpZal()
 		if(selectionAuto==3):
-			while(True):
-				led(0)
-				time.sleep(t1)
-				led(1)
-				time.sleep(t2)
+			OpWyl_Cykl()
 		if(selectionAuto==4):
-			while(True):
-				led(1)
-				time.sleep(t1)
-				led(0)
-				time.sleep(t2)
+			OpZal_Cykl()
 		else:
 			print("Brak opcji")
 	if(selection==2):
-		print("Man bi")
+		print("Manual Bi - Wsisniecie przycisku powoduje zmiane stanu.")
+		led(1)
+		while(True):
+			if(button()):
+				if(led()):
+					led(0)
+					time.sleep(0.5)
+				else:
+					led(1)
+					time.sleep(0.5)
 	if(selection==3):
-		print("Man mono")
+		print("Manual Mono - Wcisniecie przycisku powoduje zasilenie przez 1s")
+		led(0)
+		while(True):
+			if(button()):
+				led(1)
+				time.sleep(1)
+				led(0)
 	if(selection==4):
 		sys.exit()
